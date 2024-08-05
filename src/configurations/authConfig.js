@@ -40,6 +40,17 @@ export const msalConfig = {
     },
 };
 
+export const protectedResources = {
+    toDoListAPI: {
+        endpoint: 'https://localhost:44351/api/todolist',
+        scopes: ["api://3e6db6a6-2f58-4043-b7d2-46972c7eaaca/User.Read"],
+    },
+};
+
 export const loginRequest = {
-    scopes: ["User.Read"]
+    scopes: []
+};
+
+export const apiRequest = {
+    scopes: [...protectedResources.toDoListAPI.scopes]
 };
