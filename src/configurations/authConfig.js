@@ -11,7 +11,7 @@ export const msalConfig = {
         clientId: ClientId,
         authority: `https://${TenantName}.ciamlogin.com/`,
         instance: `https://${TenantName}.ciamlogin.com/`,
-        tenantId: '',
+        tenantId: TenantId,
         callbackPath: "/",
     },
     cache: {
