@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import axios from 'axios';
 import { InteractionRequiredAuthError } from '@azure/msal-browser';
+import { BackEndApiApplicationId, BackEndEndpoint } from '../configurations/authConfig';
 
 const Dashboard = () => {
     const { instance, accounts } = useMsal();
@@ -13,12 +14,11 @@ const Dashboard = () => {
     const [forecast, setForecast] = useState(null);
 
     useEffect(() => {
-        console.log("MSAL instance:", instance);
-        console.log("Accounts:", accounts);
+        setForecast(null);
         
         if (isAuthenticated && accounts.length > 0) {
             const accessTokenRequest = {
-                scopes: ["api://your-api-client-id/user.read"],
+                scopes: [`api://${BackEndApiApplicationId}/.default`],
                 account: accounts[0],
             };
 
@@ -26,16 +26,8 @@ const Dashboard = () => {
                 .acquireTokenSilent(accessTokenRequest)
                 .then((accessTokenResponse) => {
                     let accessToken = accessTokenResponse.accessToken;
-
-                    axios.get("https://localhost:44324/WeatherForecast/Private", {
-                        headers: {
-                            Authorization: `Bearer ${accessToken}`
-                        }
-                    }).then(res => {
-                        setForecast(res.data);
-                    }).catch(err => {
-                        console.error(err);
-                    });
+                    getForactInformation(accessToken);
+                    
                 })
                 .catch((error) => {
                     if (error instanceof InteractionRequiredAuthError) {
@@ -43,16 +35,7 @@ const Dashboard = () => {
                             .acquireTokenPopup(accessTokenRequest)
                             .then((accessTokenResponse) => {
                                 let accessToken = accessTokenResponse.accessToken;
-                                console.log('Access Token (Popup):', accessToken);
-                                axios.get("https://localhost:44324/WeatherForecast/Private", {
-                                    headers: {
-                                        Authorization: `Bearer ${accessToken}`
-                                    }
-                                }).then(res => {
-                                    setForecast(res.data);
-                                }).catch(err => {
-                                    console.error(err);
-                                });
+                                getForactInformation(accessToken);
                             })
                             .catch((error) => {
                                 console.log('Popup Token Acquisition Error:', error);
@@ -64,6 +47,7 @@ const Dashboard = () => {
         }
     }, [isAuthenticated, instance, accounts]);
 
+
     const handleLogout = () => {
         instance.logoutPopup()
             .then(() => {
@@ -74,6 +58,19 @@ const Dashboard = () => {
                 console.error(error);
             });
     };
+
+
+    const getForactInformation = (accessToken) => {
+        axios.get(`${BackEndEndpoint}/WeatherForecast/Private`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        }).then(res => {
+            setForecast(res.data);
+        }).catch(err => {
+            console.error(err);
+        });
+    }
 
     return (
         <Container component="main" maxWidth="xs">
