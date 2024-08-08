@@ -14,7 +14,7 @@ const LoginButton = () => {
     const navigate = useNavigate();
 
     const handleLogin = () => {
-        instance.loginPopup({ ...loginRequest, prompt: 'create' })
+        instance.loginPopup({ ...loginRequest})
             .then((response) => {
                 localStorage.setItem('accessToken', response.accessToken);
                 setAccessToken(response.accessToken);

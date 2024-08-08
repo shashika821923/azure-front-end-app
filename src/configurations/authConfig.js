@@ -1,17 +1,23 @@
 import { LogLevel } from "@azure/msal-browser";
 
-export const ClientId = 'xxxxx-xxxxx-xxxx-xxxxx'; // react application app id in azure 
-export const TenantName = 'xxxxxxxxxxxxx'; // tenant name in azure 
-export const TenantId = 'xxxxx-xxxxx-xxxx-xxxxx'; // tenant id in azure
-export const BackEndApiApplicationId = 'xxxxx-xxxxx-xxxx-xxxxx'; // web application app id in azure
+//shashika
+// export const ClientId = 'xxxxx-xxxxx-xxxx-xxxxx'; // react application app id in azure 
+// export const TenantName = 'xxxxxxxxxxxxx'; // tenant name in azure 
+// export const TenantId = 'xxxxx-xxxxx-xxxx-xxxxx'; // tenant id in azure
+// export const BackEndApiApplicationId = 'xxxxx-xxxxx-xxxx-xxxxx'; // web application app id in azure
+
+
+export const ClientId = 'e78850a5-c013-4ff1-940e-b65d1bdc6aee'; // react application app id in azure 
+export const TenantName = 'c8180359-9370-4696-b5bf-4356f7100cc8'; // tenant name in azure 
+export const TenantId = 'c8180359-9370-4696-b5bf-4356f7100cc8'; // tenant id in azure
+export const BackEndApiApplicationId = '3e6db6a6-2f58-4043-b7d2-46972c7eaaca'; // web application app id in azure
 export const BackEndEndpoint = 'https://localhost:44324';
 
 export const msalConfig = {
     auth: {
         clientId: ClientId,
-        authority: `https://${TenantName}.ciamlogin.com/`,
-        instance: `https://${TenantName}.ciamlogin.com/`,
-        tenantId: TenantId,
+        //authority: `https://login.microsoftonline.com/common`,
+        authority: `https://c8180359-9370-4696-b5bf-4356f7100cc8.ciamlogin.com/c8180359-9370-4696-b5bf-4356f7100cc8/v2.0`,
         callbackPath: "/",
     },
     cache: {
